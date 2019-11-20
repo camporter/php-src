@@ -335,9 +335,12 @@ static int oci_stmt_param_hook(pdo_stmt_t *stmt, struct pdo_bound_param_data *pa
 						P->oci_type = SQLT_CHR;
 						value_sz = (sb4) param->max_value_len;
 						if (param->max_value_len == 0) {
-							value_sz = (sb4) 1332; /* maximum size before value is interpreted as a LONG value */
+							value_sz = SB4MAXVAL;
 						}
+				}
 
+				if (value_sz == 0) {
+					value_sz = 1;
 				}
 
 				if (param->name) {
